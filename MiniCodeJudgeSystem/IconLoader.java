@@ -9,9 +9,17 @@ import javax.imageio.ImageIO;
 
 public class IconLoader {
     public static ImageIcon getIcon(String name) {
-        File file = new File("icons/" + name + ".png");
-        if (file.exists()) {
-            return new ImageIcon(file.getAbsolutePath());
+        String path = "/MiniCodeJudgeSystem/icons/" + name + ".png";
+        java.net.URL imgURL = IconLoader.class.getResource(path);
+        
+        if (imgURL != null) {
+            return new ImageIcon(imgURL);
+        } else {
+            // Fallback for development/local execution
+            File file = new File("icons/" + name + ".png");
+            if (file.exists()) {
+                return new ImageIcon(file.getAbsolutePath());
+            }
         }
         return new ImageIcon(generateDefaultIcon(name));
     }
