@@ -1,0 +1,13 @@
+WorkspacePanel.java:168: error: incompatible types: Container cannot be converted to AppFrame
+            while (parent != null && !(parent instanceof AppFrame)) {
+                                       ^
+ProblemListPanel.java:64: error: cannot find symbol
+            frame.dispose();
+                 ^
+  symbol:   method dispose()
+  location: variable frame of type AppFrame
+Dashboard.java:195: error: incompatible types: String cannot be converted to Problem
+        CodeRunner.Result result = runner.executeJava(code, className);
+                                                            ^
+Note: Some messages have been simplified; recompile with -Xdiags:verbose to get full output
+3 errors

@@ -1,0 +1,5 @@
+*.class
+temp/
+users.txt
+.gemini/
+.antigravity/
