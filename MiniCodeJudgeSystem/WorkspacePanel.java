@@ -299,20 +299,17 @@ public class WorkspacePanel extends JPanel {
                 return;
             }
             try {
-                // Connect to Node.js backend
-                HttpClient client = HttpClient.newBuilder().version(HttpClient.Version.HTTP_1_1).build();
-                webSocket = client.newWebSocketBuilder()
-                        .buildAsync(URI.create("ws://localhost:3000"), new WebSocketListener())
-                        .join();
-                
-                String joinJson = "{\"type\":\"join\",\"roomId\":\"" + roomId + "\"}";
-                webSocket.sendText(joinJson, true);
+                HttpClient client = HttpClient.newHttpClient();
+                WebSocket.Builder builder = client.newWebSocketBuilder();
+                webSocket = builder.buildAsync(URI.create(Config.WS_URL + "?roomId=" + roomId + "&username=" + username), 
+                        new WebSocketListener()).join();
+                outputArea.append("System: Joined room " + roomId + "\n");
                 
                 joinRoomBtn.setText("Leave Live");
                 roomField.setEditable(false);
                 outputArea.setText("> Connected to Collab Room: " + roomId);
-            } catch (Exception ex) {
-                JOptionPane.showMessageDialog(this, "Failed to connect to collab server. Ensure Node.js server is running on port 3000.");
+            } catch (Exception e) {
+                outputArea.append("System: Failed to connect to server for live collab.\n");
             }
         } else {
             webSocket.sendClose(WebSocket.NORMAL_CLOSURE, "Leaving");

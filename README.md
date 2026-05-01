@@ -1,68 +1,84 @@
-# 💎 ZenCode
+# ⚡ ZenCode - Premium Competitive Programming Platform
 
-**ZenCode** is a premium, high-performance coding judge platform designed for a modern developer experience. Inspired by leading platforms like LeetCode and VS Code, ZenCode offers a sleek, distraction-free environment for solving complex algorithmic challenges.
-
----
-
-## ✨ Key Features
-
-### 🎨 Elite Aesthetics
-- **Premium Glassmorphism**: Stunning semi-transparent UI elements with subtle rounded edges and glowing interactions.
-- **Deep Dark Theme**: A harmonious charcoal-to-black gradient background optimized for long coding sessions.
-- **Vibrant Navigation**: Color-coded, high-contrast navigation buttons (Problems, Workspace, Profile).
-
-### 💻 Developer Workflow
-- **Line-Wise Problem Grid**: A professional, vertical list of problems with difficulty pill tags and hover-lift effects.
-- **Integrated Workspace**: A split-pane coding environment with a monospaced editor, real-time description pane, and test-case visibility.
-- **Automatic Persistence**: Your code is saved locally as you work, so you never lose progress.
-
-### 🧩 System Capabilities
-- **Real-Time Execution**: Compile and run Java code directly within the application.
-- **Secure Auth**: Local user authentication with hashed password storage.
-- **Profile Statistics**: Track your coding streaks and total mastered challenges.
+ZenCode is a state-of-the-art competitive programming environment designed for high-performance interview preparation and algorithmic mastery. Built with a sleek dark-mode Java Swing UI and a robust Node.js backend.
 
 ---
 
-## 🚀 Quick Start (Running the App)
+## 🌟 Key Features
+
+### 🖥️ Advanced Workspace
+- **Real-time Code Execution:** Run and submit Java code locally with instant console feedback.
+- **Syntax Highlighting:** Integrated high-quality syntax coloring for Java keywords and structures.
+- **Hint System:** Stuck on a problem? Use **50 XP** to reveal a curated hint.
+- **Custom Test Cases:** Test your logic against your own inputs before submitting.
+
+### 🏆 Gamified Experience
+- **Global Leaderboard:** Compete with top coders worldwide. Rank is based on XP, solved problems, and streaks.
+- **Daily Challenges:** Earn bonus XP by solving the "Problem of the Day" featured on your dashboard.
+- **XP & Levels:** Level up as you solve more complex problems (Easy, Medium, Hard).
+- **Day Streaks:** Maintain your daily momentum to climb the ranks.
+
+### 🧪 Mock Test Center
+- **Lockdown Mode:** Simulate a real interview environment with time tracking and restricted navigation.
+- **History Tracking:** Review your past test performance and scores.
+
+### 🤝 Social & Collaboration
+- **Live Collab Rooms:** Join rooms via WebSocket to code together with friends in real-time.
+- **Battle Mode:** Challenge others to head-to-head coding battles.
+
+---
+
+## 🎨 Premium UI/UX
+- **Dark Mode Aesthetic:** Designed for long coding sessions with minimal eye strain.
+- **Standardized Color Scheme:** 
+  - 🟢 **Success (Submit):** Action-oriented green.
+  - 🟡 **Running (Run/Next):** Clear visibility for execution.
+  - 🔴 **Danger (Reset/Start):** High-impact red for critical actions.
+  - 🟣 **Special (Category/Collab):** Elegant purple for navigation.
+
+---
+
+## ⚙️ Setup & Installation
 
 ### Prerequisites
-- **Java JDK 17 or higher** must be installed and added to your system PATH.
+- **Java JDK 17+**
+- **Node.js 18+** (for the backend)
 
-### Option 1: Double-Click (Recommended)
-Simply double-click the **`ZenCode.jar`** file in the root directory.
+### 1. Start the Backend
+```bash
+cd backend
+npm install
+npm start
+```
 
-### Option 2: Command Line
-Open your terminal in the project folder and run:
+### 2. Run the Application
+You can run the compiled JAR directly:
 ```bash
 java -jar ZenCode.jar
 ```
-
-### Option 3: Developer Launch
-If you are modifying the code, you can use the built-in batch script:
+*Or use the provided script:*
 ```bash
-run.bat
+.\run.bat
 ```
 
 ---
 
-## 🛠️ Deployment & Building
-
-If you make any changes to the source code and want to rebuild the executable, use the provided deployment script:
-1. Open your terminal.
-2. Run **`deploy.bat`**.
-3. This will automatically re-compile the source and update your **`ZenCode.jar`**.
-
----
-
-## 📂 Project Structure
-- `MiniCodeJudgeSystem/`: The core Java source code and assets.
-- `icons/`: High-fidelity graphical assets for the premium UI.
-- `users.txt`: Local user database (created automatically).
-- `solutions/`: Local folder for saved user code (created automatically).
+## 🛠️ Built With
+- **Frontend:** Java Swing (Metal Look & Feel)
+- **Editor:** Custom JTextPane with Regex-based Syntax Highlighting
+- **Networking:** Java `HttpClient` (REST) & `WebSocket`
+- **Backend:** Node.js, Express, WebSocket (`ws`)
+- **Persistence:** Local file-based storage for speed and simplicity
 
 ---
 
-## 📜 License
-This project is open-source and intended for educational purposes. Feel free to fork and enhance!
+## 🔒 Security
+- **OTP Verification:** All logins and signups are protected via Email OTP.
+- **Password Hashing:** Passwords are never stored in plain text (SHA-256 encryption).
 
-**Master the code. Find your Zen.**
+---
+
+### 👨‍💻 Developer Note
+ZenCode is designed for the modern developer who wants a focused, high-performance environment to master Data Structures and Algorithms.
+
+**Happy Coding!** &lt;/&gt;

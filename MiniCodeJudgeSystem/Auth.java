@@ -18,7 +18,7 @@ public class Auth {
     
     // For handling REST API
     private static final HttpClient client = HttpClient.newBuilder().version(HttpClient.Version.HTTP_1_1).build();
-    private static final String API_URL = "http://localhost:3000/api";
+    private static final String API_URL = Config.API_URL;
     private static final String USERS_FILE = "users.txt";
 
     // State transfer between steps
