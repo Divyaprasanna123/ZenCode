@@ -10,6 +10,7 @@ public class Problem {
     public String starterCode;
     public String difficulty; // EASY, MEDIUM, HARD
     public String category;   // Arrays, Strings, DSA, Math, DP
+    public String hint;
     public List<TestCase> sampleTestCases;
     public List<TestCase> hiddenTestCases;
 
@@ -24,7 +25,7 @@ public class Problem {
     }
 
     public Problem(int id, String title, String description, String defaultClassName,
-                   String starterCode, String difficulty, String category,
+                   String starterCode, String difficulty, String category, String hint,
                    List<TestCase> sampleTestCases, List<TestCase> hiddenTestCases) {
         this.id = id;
         this.title = title;
@@ -33,6 +34,7 @@ public class Problem {
         this.starterCode = starterCode;
         this.difficulty = difficulty;
         this.category = category;
+        this.hint = hint;
         this.sampleTestCases = sampleTestCases;
         this.hiddenTestCases = hiddenTestCases;
     }

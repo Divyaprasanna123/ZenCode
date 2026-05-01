@@ -81,6 +81,35 @@ public class UserManager {
         return 0;
     }
 
+    public static boolean deductExperience(String username, int amount) {
+        File file = new File("users.txt");
+        if (!file.exists()) return false;
+        StringBuilder sb = new StringBuilder();
+        boolean success = false;
+        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split(":", -1);
+                if (parts.length >= 4 && parts[0].equals(username)) {
+                    int currentXP = Integer.parseInt(parts[3]);
+                    if (currentXP >= amount) {
+                        currentXP -= amount;
+                        line = parts[0] + ":" + parts[1] + ":" + parts[2] + ":" + currentXP;
+                        success = true;
+                    }
+                }
+                sb.append(line).append(System.lineSeparator());
+            }
+        } catch (Exception e) { e.printStackTrace(); }
+        
+        if (success) {
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
+                writer.write(sb.toString());
+            } catch (Exception e) { e.printStackTrace(); }
+        }
+        return success;
+    }
+
     public static int calculateLevel(int xp) {
         return (xp / 1000) + 1;
     }
@@ -180,17 +209,73 @@ public class UserManager {
         return list;
     }
 
+    public static void addMockTestResult(String username, String topic, int score, int maxScore) {
+        File file = new File("mock_tests.txt");
+        String date = new SimpleDateFormat("yyyy-MM-dd HH:mm").format(new Date());
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(file, true))) {
+            writer.write(username + ":" + topic + ":" + score + ":" + maxScore + ":" + date);
+            writer.newLine();
+        } catch (IOException e) { e.printStackTrace(); }
+    }
+
+    public static List<String[]> getMockTestResults(String username) {
+        List<String[]> list = new ArrayList<>();
+        File file = new File("mock_tests.txt");
+        if (!file.exists()) return list;
+        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split(":", -1);
+                if (parts.length >= 5 && parts[0].equals(username)) {
+                    list.add(parts);
+                }
+            }
+        } catch (Exception e) { e.printStackTrace(); }
+        Collections.reverse(list);
+        return list;
+    }
+
+    public static void addBattleResult(String username, boolean won) {
+        File file = new File("battles.txt");
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(file, true))) {
+            writer.write(username + ":" + (won ? "WIN" : "LOSS"));
+            writer.newLine();
+        } catch (IOException e) { e.printStackTrace(); }
+    }
+
+    public static int[] getBattleStats(String username) {
+        int wins = 0;
+        int losses = 0;
+        File file = new File("battles.txt");
+        if (!file.exists()) return new int[]{0, 0};
+        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split(":", -1);
+                if (parts.length >= 2 && parts[0].equals(username)) {
+                    if (parts[1].equals("WIN")) wins++;
+                    else if (parts[1].equals("LOSS")) losses++;
+                }
+            }
+        } catch (Exception e) { e.printStackTrace(); }
+        return new int[]{wins, losses};
+    }
+
     public static class UserStats implements Comparable<UserStats> {
         public String username;
         public int solvedCount;
         public int streak;
         public int experience;
+        public int battleWins;
+        public int battleLosses;
 
-        public UserStats(String username, int solvedCount, int streak, int experience) {
+        public UserStats(String username, int solvedCount, int streak, int experience, int battleWins, int battleLosses) {
             this.username = username;
             this.solvedCount = solvedCount;
             this.streak = streak;
             this.experience = experience;
+            this.battleWins = battleWins;
+            this.battleLosses = battleLosses;
         }
 
         @Override
@@ -219,7 +304,8 @@ public class UserManager {
                     }
                     int streak = getStreak(user);
                     int xp = parts.length >= 4 ? Integer.parseInt(parts[3]) : 0;
-                    stats.add(new UserStats(user, count, streak, xp));
+                    int[] battle = getBattleStats(user);
+                    stats.add(new UserStats(user, count, streak, xp, battle[0], battle[1]));
                 }
             }
         } catch (Exception e) { e.printStackTrace(); }

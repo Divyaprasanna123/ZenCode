@@ -13,6 +13,10 @@ public class AppFrame {
     private ProblemListPanel problemListPanel;
     private WorkspacePanel workspacePanel;
     private ProfilePanel profilePanel;
+    private TestPanel testPanel;
+    private LeaderboardPanel leaderboardPanel;
+
+    private JButton probBtn, workBtn, profBtn, testBtn, leaderBtn;
 
     public AppFrame(String username) {
         this.username = username;
@@ -33,10 +37,14 @@ public class AppFrame {
         problemListPanel = new ProblemListPanel(username, this);
         workspacePanel = new WorkspacePanel(username);
         profilePanel = new ProfilePanel(username, frame);
+        testPanel = new TestPanel(username, this);
+        leaderboardPanel = new LeaderboardPanel();
 
         contentPanel.add(problemListPanel, "PROBLEMS");
         contentPanel.add(workspacePanel, "WORKSPACE");
         contentPanel.add(profilePanel, "PROFILE");
+        contentPanel.add(testPanel, "TEST");
+        contentPanel.add(leaderboardPanel, "LEADERBOARD");
 
         JPanel topHeader = new JPanel();
         topHeader.setLayout(new BoxLayout(topHeader, BoxLayout.Y_AXIS));
@@ -58,6 +66,14 @@ public class AppFrame {
     public void switchToProblem(Problem p) {
         workspacePanel.setProblem(p);
         cardLayout.show(contentPanel, "WORKSPACE");
+    }
+
+    public void setLockdown(boolean locked) {
+        probBtn.setEnabled(!locked);
+        workBtn.setEnabled(!locked);
+        profBtn.setEnabled(!locked);
+        testBtn.setEnabled(!locked);
+        leaderBtn.setEnabled(!locked);
     }
 
     private void setupNavigationBar(JPanel container) {
@@ -101,16 +117,28 @@ public class AppFrame {
         btnBar.setOpaque(false);
         btnBar.setBorder(new EmptyBorder(10, 0, 10, 0));
 
-        JButton probBtn = createNavBtn(" Problems ", new Color(200, 50, 50)); // Red
-        JButton workBtn = createNavBtn(" Workspace ", new Color(44, 187, 93)); // Green
-        JButton profBtn = createNavBtn(" Profile ", new Color(200, 50, 50)); // Red
+        probBtn = createNavBtn(" Problems ", new Color(200, 50, 50)); // Red
+        workBtn = createNavBtn(" Workspace ", new Color(44, 187, 93)); // Green
+        testBtn = createNavBtn(" Take Test ", new Color(138, 43, 226)); // Purple
+        leaderBtn = createNavBtn(" Leaderboard ", new Color(230, 160, 50)); // Gold
+        profBtn = createNavBtn(" Profile ", new Color(200, 50, 50)); // Red
 
         probBtn.addActionListener(e -> cardLayout.show(contentPanel, "PROBLEMS"));
         workBtn.addActionListener(e -> cardLayout.show(contentPanel, "WORKSPACE"));
-        profBtn.addActionListener(e -> cardLayout.show(contentPanel, "PROFILE"));
+        testBtn.addActionListener(e -> cardLayout.show(contentPanel, "TEST"));
+        leaderBtn.addActionListener(e -> {
+            leaderboardPanel.refreshData();
+            cardLayout.show(contentPanel, "LEADERBOARD");
+        });
+        profBtn.addActionListener(e -> {
+            profilePanel.refreshData();
+            cardLayout.show(contentPanel, "PROFILE");
+        });
 
         btnBar.add(probBtn);
         btnBar.add(workBtn);
+        btnBar.add(testBtn);
+        btnBar.add(leaderBtn);
         btnBar.add(profBtn);
 
         container.add(btnBar);

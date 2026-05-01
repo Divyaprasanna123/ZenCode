@@ -1,5 +1,21 @@
+# Compiled Java classes
 *.class
+
+# Temp / build artifacts
 temp/
+codes/
+
+# Node.js dependencies (never commit these)
+backend/node_modules/
+node_modules/
+
+# Sensitive / runtime data  
 users.txt
+remember.txt
+
+# IDE / tool directories
 .gemini/
 .antigravity/
+
+# Backend secrets - never commit
+backend/.env
